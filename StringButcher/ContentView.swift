@@ -25,132 +25,186 @@ struct ContentView: View {
             let stringButcher = StringButcher()
             
             let lines = """
-
-jiggle_fill_dark_0
-jiggle_fill_dark_1
-jiggle_fill_dark_2
-jiggle_fill_dark_3
-jiggle_fill_dark_4
-jiggle_fill_dark_5
-jiggle_fill_dark_6
-jiggle_fill_light_0
-jiggle_fill_light_1
-jiggle_fill_light_2
-jiggle_fill_light_3
-jiggle_fill_light_4
-jiggle_fill_light_5
-jiggle_fill_light_6
-outline_selected_fill_dark
-outline_selected_fill_light
-outline_selected_stroke_dark
-outline_selected_stroke_light
-outline_unselected_fill_dark
-outline_unselected_fill_light
-outline_unselected_stroke_dark
-outline_unselected_stroke_light
-point_selected_outline_dark
-point_selected_outline_light
-point_weight_selected_1_dark_1
-point_weight_selected_1_light_1
-point_weight_selected_2_dark_1
-point_weight_selected_2_dark_2
-point_weight_selected_2_light_1
-point_weight_selected_2_light_2
-point_weight_selected_3_dark_1
-point_weight_selected_3_dark_2
-point_weight_selected_3_dark_3
-point_weight_selected_3_light_1
-point_weight_selected_3_light_2
-point_weight_selected_3_light_3
-point_weight_selected_4_dark_1
-point_weight_selected_4_dark_2
-point_weight_selected_4_dark_3
-point_weight_selected_4_dark_4
-point_weight_selected_4_light_1
-point_weight_selected_4_light_2
-point_weight_selected_4_light_3
-point_weight_selected_4_light_4
-point_weight_selected_5_dark_1
-point_weight_selected_5_dark_2
-point_weight_selected_5_dark_3
-point_weight_selected_5_dark_4
-point_weight_selected_5_dark_5
-point_weight_selected_5_light_1
-point_weight_selected_5_light_2
-point_weight_selected_5_light_3
-point_weight_selected_5_light_4
-point_weight_selected_5_light_5
-weight_ring_selected_1_dark_1
-weight_ring_selected_1_light_1
-weight_ring_selected_2_dark_1
-weight_ring_selected_2_dark_2
-weight_ring_selected_2_light_1
-weight_ring_selected_2_light_2
-weight_ring_selected_3_dark_1
-weight_ring_selected_3_dark_2
-weight_ring_selected_3_dark_3
-weight_ring_selected_3_light_1
-weight_ring_selected_3_light_2
-weight_ring_selected_3_light_3
-weight_ring_selected_4_dark_1
-weight_ring_selected_4_dark_2
-weight_ring_selected_4_dark_3
-weight_ring_selected_4_dark_4
-weight_ring_selected_4_light_1
-weight_ring_selected_4_light_2
-weight_ring_selected_4_light_3
-weight_ring_selected_4_light_4
-weight_ring_selected_5_dark_1
-weight_ring_selected_5_dark_2
-weight_ring_selected_5_dark_3
-weight_ring_selected_5_dark_4
-weight_ring_selected_5_dark_5
-weight_ring_selected_5_light_1
-weight_ring_selected_5_light_2
-weight_ring_selected_5_light_3
-weight_ring_selected_5_light_4
-weight_ring_selected_5_light_5
-weight_ring_selected_center_marker_dark
-weight_ring_selected_center_marker_light
-weight_ring_unselected_1_dark_1
-weight_ring_unselected_1_light_1
-weight_ring_unselected_2_dark_1
-weight_ring_unselected_2_dark_2
-weight_ring_unselected_2_light_1
-weight_ring_unselected_2_light_2
-weight_ring_unselected_3_dark_1
-weight_ring_unselected_3_dark_2
-weight_ring_unselected_3_dark_3
-weight_ring_unselected_3_light_1
-weight_ring_unselected_3_light_2
-weight_ring_unselected_3_light_3
-weight_ring_unselected_4_dark_1
-weight_ring_unselected_4_dark_2
-weight_ring_unselected_4_dark_3
-weight_ring_unselected_4_dark_4
-weight_ring_unselected_4_light_1
-weight_ring_unselected_4_light_2
-weight_ring_unselected_4_light_3
-weight_ring_unselected_4_light_4
-weight_ring_unselected_5_dark_1
-weight_ring_unselected_5_dark_2
-weight_ring_unselected_5_dark_3
-weight_ring_unselected_5_dark_4
-weight_ring_unselected_5_dark_5
-weight_ring_unselected_5_light_1
-weight_ring_unselected_5_light_2
-weight_ring_unselected_5_light_3
-weight_ring_unselected_5_light_4
-weight_ring_unselected_5_light_5
-weight_ring_unselected_center_marker_dark
-weight_ring_unselected_center_marker_light
+swivel_camera_zoom
+swivel_camera_pan
+swivel_camera_tilt
+swivel_camera_twist
+swivel_light_ambient
+swivel_light_diffuse
+swivel_light_specular
+bounce_speed
+bounce_power
+twist_speed
+twist_power
+jiggle_speed
+jiggle_power
+zoom_amount
+loop_speed
+movement_horizontal
+movement_vertical
+inflate_amount_start
+inflate_amount_end
+inflate_amount
+circle_factor
 """
             
+            let format = """
+            import Foundation
+
+            extension ToolInterfaceViewModel {
+                func get\(StringButcher.symbolCamelUpper)SliderToolNode(widthCategory: ToolInterfaceElementSliderWidthCategory,
+                                                  neighborTypeLeft: ToolInterfaceElementType?,
+                                                  neighborTypeRight: ToolInterfaceElementType?) -> ToolNode {
+                    let orientation = jiggleViewModel.jiggleDocument.orientation
+                    let textLine1 = ToolInterfaceStringLibrarySliders.sliderText\(StringButcher.symbolCamelUpper)Line1()
+                    let textLine2 = ToolInterfaceStringLibrarySliders.sliderText\(StringButcher.symbolCamelUpper)Line2()
+                    let iconPack = SliderIconLibrary.boxus
+                    var friendLabel1Line1: String?; var friendLabel1Line2: String?
+                    var friendLabel2Line1: String?; var friendLabel2Line2: String?
+                    var friendLabel3Line1: String?; var friendLabel3Line2: String?
+                    var friendLabel4Line1: String?; var friendLabel4Line2: String?
+                    /*
+                    if widthCategory == .fullWidth {
+                        friendLabel1Line1 = ToolInterfaceStringLibrarySliders.sliderTextBounceSpeedLine1()
+                        friendLabel1Line2 = ToolInterfaceStringLibrarySliders.sliderTextBounceSpeedLine2()
+                    }
+                    */
+                    let configuration = ToolInterfaceElementSliderConfiguration(iconPack: iconPack,
+                                                                                orientation: orientation,
+                                                                                nameLabelLine1: textLine1,
+                                                                                nameLabelLine2: textLine2,
+                                                                                friend_1_nameLabelLine1: friendLabel1Line1,
+                                                                                friend_1_nameLabelLine2: friendLabel1Line2,
+                                                                                friend_2_nameLabelLine1: friendLabel2Line1,
+                                                                                friend_2_nameLabelLine2: friendLabel2Line2,
+                                                                                friend_3_nameLabelLine1: friendLabel3Line1,
+                                                                                friend_3_nameLabelLine2: friendLabel3Line2,
+                                                                                friend_4_nameLabelLine1: friendLabel4Line1,
+                                                                                friend_4_nameLabelLine2: friendLabel4Line2,
+                                                                                minimumValue: Jiggle.bouncePowerMin,
+                                                                                maximumValue: Jiggle.bouncePowerMax,
+                                                                                valueWholeNumberCount: 2,
+                                                                                valueDecimalCount: 3,
+                                                                                widthCategory: widthCategory)
+                    
+                    let flex = Self.getSliderFlex(orientation: orientation,
+                                                  configuration: configuration,
+                                                  neighborTypeLeft: neighborTypeLeft,
+                                                  neighborTypeRight: neighborTypeRight)
+                    let viewModel\(StringButcher.symbolCamelUpper) = MagicalSliderViewModel\(StringButcher.symbolCamelUpper)(jiggleViewModel: jiggleViewModel,
+                                                                                 toolInterfaceViewModel: self,
+                                                                                 sliderConfiguration: configuration)
+                    let result = ToolNode(id: getToolNodeID(),
+                                          element: .slider\(StringButcher.symbolCamelUpper),
+                                          flex: flex,
+                                          toolInterfaceViewModel: self,
+                                          magicalViewModel: viewModel\(StringButcher.symbolCamelUpper),
+                                          neighborTypeLeft: neighborTypeLeft,
+                                          neighborTypeRight: neighborTypeRight)
+                    viewModel\(StringButcher.symbolCamelUpper).refresh()
+                    return result
+                }
+            }
+
             
+            
+            
+            """
+            
+            
+            /*
+            let format = """
+            import Foundation
+
+            @Observable class MagicalSliderViewModel\(StringButcher.symbolCamelUpper): MagicalSliderViewModel {
+                
+                override func refresh() {
+                    /*
+                    if let selectedJiggle = jiggleViewModel.getSelectedJiggle() {
+                        refreshEnabled(value: selectedJiggle.bouncePower)
+                    } else {
+                        refreshDisabled()
+                    }
+                    */
+                }
+                
+                deinit {
+                    print("MagicalSlider \(StringButcher.symbolCamelUpper) - Dealloc")
+                }
+                
+                override func handleSlideStarted(percent: CGFloat) {
+                    super.handleSlideStarted(percent: percent)
+                    let value = sliderConfiguration.minimumValue + (sliderConfiguration.maximumValue - sliderConfiguration.minimumValue) * Float(percent)
+                    jiggleViewModel.notifySliderStarted\(StringButcher.symbolCamelUpper)(value: value)
+                }
+                
+                override func handleSlideUpdated(percent: CGFloat) {
+                    let value = sliderConfiguration.minimumValue + (sliderConfiguration.maximumValue - sliderConfiguration.minimumValue) * Float(percent)
+                    /*
+                    if let selectedJiggle = jiggleViewModel.getSelectedJiggle() {
+                        
+                        selectedJiggle.bouncePower = value
+                    }
+                    */
+                    super.handleSlideUpdated(percent: percent)
+                }
+                
+                override func handleSlideFinished(percent: CGFloat) {
+                    super.handleSlideFinished(percent: percent)
+                    let value = sliderConfiguration.minimumValue + (sliderConfiguration.maximumValue - sliderConfiguration.minimumValue) * Float(percent)
+                    /*
+                    
+                    if let selectedJiggle = jiggleViewModel.getSelectedJiggle() {
+                        selectedJiggle.bouncePower = value
+                    }
+                    
+                    */
+                    jiggleViewModel.notifySliderFinished\(StringButcher.symbolCamelUpper)(value: value)
+                }
+            }
+
+            """
+            */
+            
+            /*
+            let format = """
+            
+            func notifySliderStarted\(StringButcher.symbolCamelUpper)(value: Float) {
+            print("notifySliderStarted\(StringButcher.symbolCamelUpper): \\(value)")
+            }
+            
+            func notifySliderFinished\(StringButcher.symbolCamelUpper)(value: Float) {
+            print("notifySliderFinished\(StringButcher.symbolCamelUpper): \\(value)")
+            }
+            """
+            */
+            
+            //let format = "MagicalSliderViewModel+\(StringButcher.symbolCamelUpper)"
+            
+            //let format = "ToolInterfaceViewModel+\(StringButcher.symbolCamelUpper)"
+            
+            //let format = "case .slider\(StringButcher.symbolCamelUpper):\nreturn .slider"
+            
+            /*
+            let format = """
+static func sliderText\(StringButcher.symbolCamelUpper)Line1() -> String? {
+    GeneralStringLibrary.stringOrNull(String(localized: "\(StringButcher.symbolOriginal)_line_1", table: "ToolInterfaceSliders"))
+}
+    
+static func sliderText\(StringButcher.symbolCamelUpper)Line2() -> String? {
+    GeneralStringLibrary.stringOrNull(String(localized: "\(StringButcher.symbolOriginal)_line_2", table: "ToolInterfaceSliders"))
+}
+
+"""
+             */
+            
+            /*
             let format =
 """
 static let _\(StringButcher.symbolCamelLower) = UIColor(named: "\(StringButcher.symbolOriginal)") ?? UIColor()
 """
+            */
+            
             
             /*
              let format =
@@ -252,8 +306,4 @@ get\(StringButcher.symbolCamelUpper)TextIconButtonToolNode
             
         }
     }
-}
-
-#Preview {
-    ContentView()
 }

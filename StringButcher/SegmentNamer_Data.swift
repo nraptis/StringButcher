@@ -9,8 +9,6 @@ import Foundation
 
 let segmentNamers = [
 
-    
-    
     SegmentNamer(master: "display_mode", type: "secondary", modes: [
         "regular",
         "swivel",
