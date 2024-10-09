@@ -19,6 +19,33 @@ class StringButcher {
         let camelUpper: String
     }
     
+    func camelToSnakePrintLines(_ lines: String) {
+        let __lines = lines.split(separator: "\n").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { $0.count > 0 }
+        for line in __lines {
+            let snake = camelToSnake(line)
+            print(snake)
+        }
+        
+    }
+    
+    func camelToSnake(_ string: String) -> String {
+    
+        let letters = Array(string)
+        let lettersLower = Array(string.lowercased())
+        var resultArray = [Character]()
+        for letterIndex in letters.indices {
+            let letter = letters[letterIndex]
+            let letterLower = lettersLower[letterIndex]
+            if letter.isUppercase {
+                if (letterIndex != (letters.count - 1)) && (letterIndex != (0)) {
+                    resultArray.append("_")
+                }
+            }
+            resultArray.append(letterLower)
+        }
+        return String(resultArray)
+    }
+    
     func butcher(lines: String, format: String) {
         
         let __lines = lines.split(separator: "\n").sorted().map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { $0.count > 0 }
